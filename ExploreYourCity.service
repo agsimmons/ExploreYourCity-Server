@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn instance to serve ExploreYourCity
+After=network.target
+
+[Service]
+User=andrew
+Group=www-data
+WorkingDirectory=/home/andrew/projects/ExploreYourCity-Server
+Environment="PATH=/home/andrew/projects/ExploreYourCity-Server/venv/bin"
+ExecStart=/home/andrew/projects/ExploreYourCity-Server/venv/bin/gunicorn --workers 10 --bind unix:ExploreYourCity.sock -m 007 wsgi:app
+
+[Install]
+WantedBy=multi-user.target
