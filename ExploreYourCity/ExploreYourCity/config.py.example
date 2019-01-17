@@ -1,0 +1,5 @@
+# Django secret key
+secret_key = ''
+
+# Database config
+database_configuration = {}
