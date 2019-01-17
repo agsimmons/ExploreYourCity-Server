@@ -115,4 +115,4 @@ dmypy.json
 .pyre/
 
 # Project Specific
-secrets.py
+config.py
