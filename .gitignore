@@ -116,3 +116,7 @@ dmypy.json
 
 # Project Specific
 config.py
+
+# Tool Specific
+*.swp
+
