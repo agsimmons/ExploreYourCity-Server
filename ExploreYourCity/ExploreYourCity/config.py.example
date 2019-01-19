@@ -1,5 +1,6 @@
-# Django secret key
 secret_key = ''
 
-# Database config
+allowed_hosts = []
+
 database_configuration = {}
+
