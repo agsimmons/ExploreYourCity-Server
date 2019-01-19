@@ -119,4 +119,4 @@ config.py
 
 # Tool Specific
 *.swp
-
+.idea/
