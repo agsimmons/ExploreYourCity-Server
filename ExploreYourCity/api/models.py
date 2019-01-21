@@ -31,6 +31,7 @@ class Location(models.Model):
     def __str__(self):
         return f'{self.name} - {self.latitude},{self.longitude}'
 
+
 class Mission(models.Model):
     name = models.CharField(max_length=200)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
@@ -46,6 +47,7 @@ class Objective(models.Model):
     def __str__(self):
         return f'Mission: {self.mission.name} - Location: {self.location.name}'
 
+
 class Player(models.Model):
     user = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)
     score = models.IntegerField()
@@ -55,4 +57,3 @@ class Player(models.Model):
 
     def __str__(self):
         return self.user.username
-
