@@ -52,9 +52,9 @@ class Player(models.Model):
     user = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)
     username = models.CharField(max_length=64, unique=True)
     score = models.IntegerField(default=0)
-    friends = models.ManyToManyField('self')
-    missions = models.ManyToManyField(Mission)
-    objectives_completed = models.ManyToManyField(Objective)
+    friends = models.ManyToManyField('self', blank=True)
+    missions = models.ManyToManyField(Mission, blank=True)
+    objectives_completed = models.ManyToManyField(Objective, blank=True)
 
     def __str__(self):
         return self.username
