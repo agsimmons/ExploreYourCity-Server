@@ -17,6 +17,9 @@ class Region(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=100)
 
+    class Meta:
+        verbose_name_plural = 'Categories'
+
     def __str__(self):
         return self.name
 
@@ -50,11 +53,10 @@ class Objective(models.Model):
 
 class Player(models.Model):
     user = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)
-    username = models.CharField(max_length=64, unique=True)
     score = models.IntegerField(default=0)
     friends = models.ManyToManyField('self', blank=True)
     missions = models.ManyToManyField(Mission, blank=True)
     objectives_completed = models.ManyToManyField(Objective, blank=True)
 
     def __str__(self):
-        return self.username
+        return self.user.username
