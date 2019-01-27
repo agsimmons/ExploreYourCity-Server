@@ -15,8 +15,14 @@ class Region(models.Model):
         return f'{self.name} - {self.latitude},{self.longitude} - Radius: {self.radius}km'
 
 
+# https://developers.google.com/places/supported_types
+class Type(models.Model):
+    name = models.TextField()
+
+
 class Category(models.Model):
     name = models.CharField(max_length=100)
+    types = models.ManyToManyField(Type)
 
     class Meta:
         verbose_name_plural = 'Categories'
@@ -26,11 +32,16 @@ class Category(models.Model):
 
 
 class Location(models.Model):
-    name = models.CharField(max_length=200)
     categories = models.ManyToManyField(Category)
+
+    # Google Maps metadata
+    name = models.TextField()
     latitude = models.FloatField()
     longitude = models.FloatField()
-    # TODO: Add Google Maps related metadata like location ID or address
+    formatted_address = models.TextField()
+    google_id = models.TextField()
+    place_id = models.TextField()
+    reference = models.TextField()
 
     def __str__(self):
         return f'{self.name} - {self.latitude},{self.longitude}'
