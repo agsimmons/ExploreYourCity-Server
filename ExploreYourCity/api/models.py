@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User as DjangoUser
 
-# TODO: Add relationships between user and other tables
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class Region(models.Model):
@@ -61,3 +62,10 @@ class Player(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+# When a User is created, create a corresponding Player with a OneToOne relationship to the created User
+@receiver(post_save, sender=DjangoUser)
+def create_player(sender, instance, created, **kwargs):
+    if created:
+        Player.objects.create(user=instance)
