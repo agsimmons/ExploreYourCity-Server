@@ -42,7 +42,7 @@ class Mission(models.Model):
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.region} - {self.name}'
+        return f'{self.name} - {self.region.name}'
 
 
 class Objective(models.Model):
