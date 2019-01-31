@@ -1,0 +1,632 @@
+[
+    {
+        "model": "api.type",
+        "pk": 1,
+        "fields": {
+            "name": "accounting"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 2,
+        "fields": {
+            "name": "airport"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 3,
+        "fields": {
+            "name": "amusement_park"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 4,
+        "fields": {
+            "name": "aquarium"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 5,
+        "fields": {
+            "name": "art_gallery"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 6,
+        "fields": {
+            "name": "atm"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 7,
+        "fields": {
+            "name": "bakery"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 8,
+        "fields": {
+            "name": "bank"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 9,
+        "fields": {
+            "name": "bar"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 10,
+        "fields": {
+            "name": "beauty_salon"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 11,
+        "fields": {
+            "name": "bicycle_store"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 12,
+        "fields": {
+            "name": "book_store"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 13,
+        "fields": {
+            "name": "bowling_alley"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 14,
+        "fields": {
+            "name": "bus_station"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 15,
+        "fields": {
+            "name": "cafe"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 16,
+        "fields": {
+            "name": "campground"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 17,
+        "fields": {
+            "name": "car_dealer"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 18,
+        "fields": {
+            "name": "car_rental"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 19,
+        "fields": {
+            "name": "car_repair"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 20,
+        "fields": {
+            "name": "car_wash"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 21,
+        "fields": {
+            "name": "casino"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 22,
+        "fields": {
+            "name": "cemetery"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 23,
+        "fields": {
+            "name": "church"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 24,
+        "fields": {
+            "name": "city_hall"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 25,
+        "fields": {
+            "name": "clothing_store"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 26,
+        "fields": {
+            "name": "convenience_store"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 27,
+        "fields": {
+            "name": "courthouse"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 28,
+        "fields": {
+            "name": "dentist"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 29,
+        "fields": {
+            "name": "department_store"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 30,
+        "fields": {
+            "name": "doctor"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 31,
+        "fields": {
+            "name": "electrician"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 32,
+        "fields": {
+            "name": "electronics_store"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 33,
+        "fields": {
+            "name": "embassy"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 34,
+        "fields": {
+            "name": "fire_station"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 35,
+        "fields": {
+            "name": "florist"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 36,
+        "fields": {
+            "name": "funeral_home"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 37,
+        "fields": {
+            "name": "furniture_store"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 38,
+        "fields": {
+            "name": "gas_station"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 39,
+        "fields": {
+            "name": "gym"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 40,
+        "fields": {
+            "name": "hair_care"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 41,
+        "fields": {
+            "name": "hardware_store"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 42,
+        "fields": {
+            "name": "hindu_temple"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 43,
+        "fields": {
+            "name": "home_goods_store"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 44,
+        "fields": {
+            "name": "hospital"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 45,
+        "fields": {
+            "name": "insurance_agency"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 46,
+        "fields": {
+            "name": "jewelry_store"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 47,
+        "fields": {
+            "name": "laundry"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 48,
+        "fields": {
+            "name": "lawyer"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 49,
+        "fields": {
+            "name": "library"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 50,
+        "fields": {
+            "name": "liquor_store"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 51,
+        "fields": {
+            "name": "local_government_office"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 52,
+        "fields": {
+            "name": "locksmith"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 53,
+        "fields": {
+            "name": "lodging"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 54,
+        "fields": {
+            "name": "meal_delivery"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 55,
+        "fields": {
+            "name": "meal_takeaway"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 56,
+        "fields": {
+            "name": "mosque"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 57,
+        "fields": {
+            "name": "movie_rental"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 58,
+        "fields": {
+            "name": "movie_theater"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 59,
+        "fields": {
+            "name": "moving_company"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 60,
+        "fields": {
+            "name": "museum"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 61,
+        "fields": {
+            "name": "night_club"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 62,
+        "fields": {
+            "name": "painter"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 63,
+        "fields": {
+            "name": "park"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 64,
+        "fields": {
+            "name": "parking"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 65,
+        "fields": {
+            "name": "pet_store"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 66,
+        "fields": {
+            "name": "pharmacy"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 67,
+        "fields": {
+            "name": "physiotherapist"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 68,
+        "fields": {
+            "name": "plumber"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 69,
+        "fields": {
+            "name": "police"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 70,
+        "fields": {
+            "name": "post_office"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 71,
+        "fields": {
+            "name": "real_estate_agency"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 72,
+        "fields": {
+            "name": "restaurant"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 73,
+        "fields": {
+            "name": "roofing_contractor"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 74,
+        "fields": {
+            "name": "rv_park"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 75,
+        "fields": {
+            "name": "school"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 76,
+        "fields": {
+            "name": "shoe_store"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 77,
+        "fields": {
+            "name": "shopping_mall"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 78,
+        "fields": {
+            "name": "spa"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 79,
+        "fields": {
+            "name": "stadium"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 80,
+        "fields": {
+            "name": "storage"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 81,
+        "fields": {
+            "name": "store"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 82,
+        "fields": {
+            "name": "subway_station"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 83,
+        "fields": {
+            "name": "supermarket"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 84,
+        "fields": {
+            "name": "synagogue"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 85,
+        "fields": {
+            "name": "taxi_stand"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 86,
+        "fields": {
+            "name": "train_station"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 87,
+        "fields": {
+            "name": "transit_station"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 88,
+        "fields": {
+            "name": "travel_agency"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 89,
+        "fields": {
+            "name": "veterinary_care"
+        }
+    },
+    {
+        "model": "api.type",
+        "pk": 90,
+        "fields": {
+            "name": "zoo"
+        }
+    }
+]
