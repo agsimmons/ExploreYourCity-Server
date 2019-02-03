@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.models import User
+from . import models
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -31,4 +32,20 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'password')
+
+
+class CoordinateSerializer(serializers.Serializer):
+    latitude = serializers.FloatField()
+    longitude = serializers.FloatField()
+
+
+class MissionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Mission
+        fields = ('id', 'name', 'value', 'latitude', 'longitude')
+
+
+class MissionDistanceSerializer(serializers.Serializer):
+    distance = serializers.FloatField()
+    mission = MissionSerializer()
 
