@@ -80,10 +80,3 @@ class Player(models.Model):
 
     def __str__(self):
         return self.user.username
-
-
-# When a User is created, create a corresponding Player with a OneToOne relationship to the created User
-@receiver(post_save, sender=DjangoUser)
-def create_player(sender, instance, created, **kwargs):
-    if created:
-        Player.objects.create(user=instance)
