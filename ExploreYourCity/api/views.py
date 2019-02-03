@@ -67,6 +67,14 @@ class Missions(APIView):
         else:
             return Response(coordinate_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# # Get details of specific mission
-# # /missions/<id>
-# # TODO
+# Get details of specific mission
+# /missions/<int:pk>
+class MissionsDetail(APIView):
+    def get(self, request, pk, format=None):
+        try:
+            mission = models.Mission.objects.get(pk=pk)
+        except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        serializer = serializers.MissionDetailSerializer(mission)
+        return Response(serializer.data, status=status.HTTP_200_OK)

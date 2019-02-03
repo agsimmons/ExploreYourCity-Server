@@ -49,3 +49,16 @@ class MissionDistanceSerializer(serializers.Serializer):
     distance = serializers.FloatField()
     mission = MissionSerializer()
 
+
+class RegionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Region
+        fields = '__all__'
+
+
+class MissionDetailSerializer(serializers.ModelSerializer):
+    region = RegionSerializer()
+
+    class Meta:
+        model = models.Mission
+        fields = '__all__'
