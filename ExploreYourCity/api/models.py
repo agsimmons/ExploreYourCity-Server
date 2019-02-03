@@ -53,6 +53,10 @@ class Location(models.Model):
 class Mission(models.Model):
     name = models.CharField(max_length=200)
     value = models.IntegerField()
+
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
 
     def __str__(self):
