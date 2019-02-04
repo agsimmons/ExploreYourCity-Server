@@ -12,6 +12,7 @@ import operator
 
 
 # Register a new user account
+# PUSH
 # /register
 # Body:
 #     username: New user username
@@ -35,6 +36,7 @@ class UserRegister(APIView):
 
 
 # Search for user by username
+# GET
 # /users/
 # Body:
 #     username: Username to search for
@@ -56,6 +58,7 @@ class Users(APIView):
 
 
 # Get missions sorted by distance from user
+# GET
 # /missions
 # Body:
 #     latitude: current latitude
@@ -91,6 +94,7 @@ class Missions(APIView):
 
 
 # Get details of specific mission
+# GET
 # /missions/<int:pk>
 class MissionsDetail(APIView):
     def get(self, request, pk, format=None):
