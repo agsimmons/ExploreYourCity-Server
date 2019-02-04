@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 import rest_framework.permissions
+from django.contrib.auth.models import User
 from . import serializers
 from . import models
 from . import functions
@@ -31,6 +32,27 @@ class UserRegister(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# Search for user by username
+# /users/
+# Body:
+#     username: Username to search for
+# TODO: Change to return a list of similar usernames sorted by similarity
+class Users(APIView):
+    def get(self, request, format=None):
+        username_serializer = serializers.UsernameSerializer(data=request.data)
+
+        if username_serializer.is_valid():
+            try:
+                user = User.objects.get(username=username_serializer.validated_data['username'])
+            except:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+
+            user_serializer = serializers.UserSerializer(user)
+            return Response(user_serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(username_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # Get missions sorted by distance from user
@@ -66,6 +88,7 @@ class Missions(APIView):
             return Response(mission_distance_serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(coordinate_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 # Get details of specific mission
 # /missions/<int:pk>

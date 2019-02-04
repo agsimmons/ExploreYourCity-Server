@@ -62,3 +62,14 @@ class MissionDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Mission
         fields = '__all__'
+
+
+class UsernameSerializer(serializers.Serializer):
+    username = serializers.CharField()
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        # TODO: Add associated player's score
+        fields = ('id', 'username')
