@@ -1,4 +1,4 @@
-from rest_framework import status, viewsets
+from rest_framework import status, viewsets, mixins
 from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -11,97 +11,61 @@ from . import functions
 import operator
 
 
-# Register a new user account
-# PUSH
-# /register
-# Body:
-#     username: New user username
-#     password: New user password
-#     email: New user email
-class UserRegister(APIView):
-    permission_classes = (rest_framework.permissions.AllowAny,)
-
-    def post(self, request, format=None):
-        serializer = serializers.UserSerializer(data=request.data)
-        if serializer.is_valid():
-            user = serializer.save()
-
-            # TODO: Deactivate user account and send verification email which re-activates account
-            # user.is_active = False
-            # user.save()
-
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-# Search for user by username
-# GET
 # /users/
-# Body:
-#     username: Username to search for
-# TODO: Change to return a list of similar usernames sorted by similarity
-class Users(APIView):
-    def get(self, request, format=None):
-        username_serializer = serializers.UsernameSerializer(data=request.data)
+class UserViewSet(mixins.CreateModelMixin,
+                  mixins.ListModelMixin,
+                  mixins.RetrieveModelMixin,
+                  viewsets.GenericViewSet):
 
-        if username_serializer.is_valid():
-            try:
-                user = User.objects.get(username=username_serializer.validated_data['username'])
-            except:
-                return Response(status=status.HTTP_404_NOT_FOUND)
+    queryset = User.objects.all()
+    serializer_class = serializers.UserSerializer
 
-            user_serializer = serializers.UserSerializer(user)
-            return Response(user_serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response(username_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get_permissions(self):
+        if self.request.method == 'POST':
+            return []
+        return super().get_permissions()
 
 
-# Get missions sorted by distance from user
-# GET
-# /missions
-# Body:
-#     latitude: current latitude
-#     longitude: current longitude
-class Missions(APIView):
-    def get(self, request, format=None):
-        coordinate_serializer = serializers.CoordinateSerializer(data=request.data)
+# /missions/
+class MissionViewSet(mixins.ListModelMixin,
+                     mixins.RetrieveModelMixin,
+                     viewsets.GenericViewSet):
 
-        # If passed latitude and longitude is valid
-        if coordinate_serializer.is_valid():
-            lat = coordinate_serializer.validated_data['latitude']
-            lon = coordinate_serializer.validated_data['longitude']
+    queryset = models.Mission.objects.all()
+    serializer_class = serializers.MissionSerializer
 
-            missions = models.Mission.objects.all()
-            mission_distance_list = []
-            for mission in missions:
-                distance = functions.distance_between_coordinates((lat, lon),
-                                                                  (mission.latitude, mission.longitude))
-                mission_distance_list.append((distance, mission))
-            mission_distance_list.sort(key=operator.itemgetter(0))
+# # Get missions sorted by distance from user
+# # GET
+# # /missions
+# # Body:
+# #     latitude: current latitude
+# #     longitude: current longitude
+# class Missions(APIView):
+#     def get(self, request, format=None):
+#         coordinate_serializer = serializers.CoordinateSerializer(data=request.data)
+#
+#         # If passed latitude and longitude is valid
+#         if coordinate_serializer.is_valid():
+#             lat = coordinate_serializer.validated_data['latitude']
+#             lon = coordinate_serializer.validated_data['longitude']
+#
+#             missions = models.Mission.objects.all()
+#             mission_distance_list = []
+#             for mission in missions:
+#                 distance = functions.distance_between_coordinates((lat, lon),
+#                                                                   (mission.latitude, mission.longitude))
+#                 mission_distance_list.append((distance, mission))
+#             mission_distance_list.sort(key=operator.itemgetter(0))
+#
+#             return_mission_list = []
+#             for mission in mission_distance_list:
+#                 return_mission_list.append({
+#                     'distance': mission[0],
+#                     'mission': mission[1]
+#                 })
+#
+#             mission_distance_serializer = serializers.MissionDistanceSerializer(return_mission_list, many=True)
+#             return Response(mission_distance_serializer.data, status=status.HTTP_200_OK)
+#         else:
+#             return Response(coordinate_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-            return_mission_list = []
-            for mission in mission_distance_list:
-                return_mission_list.append({
-                    'distance': mission[0],
-                    'mission': mission[1]
-                })
-
-            mission_distance_serializer = serializers.MissionDistanceSerializer(return_mission_list, many=True)
-            return Response(mission_distance_serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response(coordinate_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-# Get details of specific mission
-# GET
-# /missions/<int:pk>
-class MissionsDetail(APIView):
-    def get(self, request, pk, format=None):
-        try:
-            mission = models.Mission.objects.get(pk=pk)
-        except:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-
-        serializer = serializers.MissionDetailSerializer(mission)
-        return Response(serializer.data, status=status.HTTP_200_OK)
