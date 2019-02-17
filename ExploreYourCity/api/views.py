@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 import rest_framework.permissions
+from rest_framework.decorators import action
 from django.contrib.auth.models import User
 from . import serializers
 from . import models
@@ -19,6 +20,15 @@ class UserViewSet(mixins.CreateModelMixin,
 
     queryset = User.objects.all()
     serializer_class = serializers.UserSerializer
+
+    @action(detail=False, methods=['GET'])
+    def myself(self, request):
+        """
+        If authentication credentials are valid, status 200 and {'user': id} is returned.\n
+        If authentication credentials are invalid, status 401
+        """
+        if request.user:
+            return Response({'user_pk': request.user.id}, status=status.HTTP_200_OK)
 
     def get_permissions(self):
         if self.request.method == 'POST':
