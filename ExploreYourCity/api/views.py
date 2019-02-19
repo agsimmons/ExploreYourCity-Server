@@ -27,8 +27,8 @@ class UserViewSet(mixins.CreateModelMixin,
         If authentication credentials are valid, status 200 and {'user': id} is returned.\n
         If authentication credentials are invalid, status 401
         """
-        if request.user:
-            return Response({'user_pk': request.user.id}, status=status.HTTP_200_OK)
+
+        return Response({'user_pk': request.user.id}, status=status.HTTP_200_OK)
 
     @action(detail=False, methods=['DELETE'])
     def remove_account(self, request, pk=None):
