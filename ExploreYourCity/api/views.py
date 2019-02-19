@@ -30,6 +30,16 @@ class UserViewSet(mixins.CreateModelMixin,
         if request.user:
             return Response({'user_pk': request.user.id}, status=status.HTTP_200_OK)
 
+    @action(detail=False, methods=['DELETE'])
+    def remove_account(self, request, pk=None):
+        """
+        Deletes authenticated user's account
+        """
+
+        request.user.delete()
+
+        return Response(status=status.HTTP_200_OK)
+
     def get_permissions(self):
         if self.request.method == 'POST':
             return []
