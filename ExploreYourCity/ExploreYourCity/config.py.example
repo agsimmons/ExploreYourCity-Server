@@ -4,4 +4,9 @@ debug = True
 
 allowed_hosts = []
 
-database_configuration = {}
+database_configuration = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
+    }
+}
