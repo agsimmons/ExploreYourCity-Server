@@ -5,10 +5,3 @@ debug = True
 allowed_hosts = []
 
 database_configuration = {}
-
-# Email
-EMAIL_USE_TLS = ''
-EMAIL_HOST = ''
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
-EMAIL_PORT = 1234
