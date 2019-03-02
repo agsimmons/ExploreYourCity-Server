@@ -72,7 +72,11 @@ class Player(models.Model):
     user = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)
     score = models.IntegerField(default=0)
     friends = models.ManyToManyField('self', blank=True)
-    missions = models.ManyToManyField(Mission, blank=True)
+
+    missions_active = models.ManyToManyField(Mission, blank=True)
+    missions_completed = models.ManyToManyField(Mission, blank=True)
+
+    objectives_active = models.ManyToManyField(Objective, blank=True)
     objectives_completed = models.ManyToManyField(Objective, blank=True)
 
     def __str__(self):
