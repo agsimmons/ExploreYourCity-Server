@@ -14,31 +14,98 @@ import operator
 
 # /users/
 class UserViewSet(mixins.CreateModelMixin,
-                  mixins.ListModelMixin,
-                  mixins.RetrieveModelMixin,
                   viewsets.GenericViewSet):
 
     queryset = User.objects.all()
     serializer_class = serializers.UserSerializer
 
+
+# /players/
+class PlayerViewSet(mixins.ListModelMixin,
+                    mixins.RetrieveModelMixin,
+                    viewsets.GenericViewSet):
+
+    queryset = models.Player.objects.all()
+    serializer_class = serializers.PlayerSerializer
+
     @action(detail=False, methods=['GET'])
     def myself(self, request):
         """
-        If authentication credentials are valid, status 200 and {'user': id} is returned.\n
+        If authentication credentials are valid, status 200 and {'id': int} is returned.\n
         If authentication credentials are invalid, status 401
         """
 
-        return Response({'user_pk': request.user.id}, status=status.HTTP_200_OK)
+        return Response({'id': request.user.player.id}, status=status.HTTP_200_OK)
 
     @action(detail=False, methods=['DELETE'])
-    def remove_account(self, request, pk=None):
+    def remove_account(self, request):
         """
-        Deletes authenticated user's account
+        Deletes authenticated player's account
         """
 
         request.user.delete()
 
         return Response(status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=['GET'])
+    def active_missions(self, request, pk=None):
+        """
+        Returns a list of specified player's active missions
+        """
+
+        try:
+            player = models.Player.objects.get(pk=pk)
+        except models.Player.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        missions = player.active_missions.all()
+
+        serializer = serializers.MissionSerializer(missions, many=True)
+
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=['GET'])
+    def completed_missions(self, request, pk=None):
+        """
+                Returns a list of specified player's completed missions
+         """
+
+        try:
+            player = models.Player.objects.get(pk=pk)
+        except models.Player.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        missions = player.completed_missions.all()
+
+        serializer = serializers.MissionSerializer(missions, many=True)
+
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=['GET'])
+    def active_objectives(self, request, pk=None):
+        try:
+            player = models.Player.objects.get(pk=pk)
+        except models.Player.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        objectives = player.active_objectives.all()
+
+        serializer = serializers.ObjectiveSerializer(objectives, many=True)
+
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=['GET'])
+    def completed_objectives(self, request, pk=None):
+        try:
+            player = models.Player.objects.get(pk=pk)
+        except models.Player.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        objectives = player.completed_objectives.all()
+
+        serializer = serializers.ObjectiveSerializer(objectives, many=True)
+
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     def get_permissions(self):
         if self.request.method == 'POST':
@@ -52,7 +119,17 @@ class MissionViewSet(mixins.ListModelMixin,
                      viewsets.GenericViewSet):
 
     queryset = models.Mission.objects.all()
-    serializer_class = serializers.MissionSerializer
+    serializer_class = serializers.MissionDetailSerializer
+
+
+# /objectives/
+class ObjectiveViewSet(mixins.ListModelMixin,  # TODO: Remove ListModelMixin?
+                       mixins.RetrieveModelMixin,
+                       viewsets.GenericViewSet):
+
+    queryset = models.Objective.objects.all()
+    serializer_class = serializers.ObjectiveDetailSerializer
+
 
 # # Get missions sorted by distance from user
 # # GET
@@ -88,4 +165,3 @@ class MissionViewSet(mixins.ListModelMixin,
 #             return Response(mission_distance_serializer.data, status=status.HTTP_200_OK)
 #         else:
 #             return Response(coordinate_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-

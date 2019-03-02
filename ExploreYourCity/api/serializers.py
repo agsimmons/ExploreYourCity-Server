@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.models import User
 from . import models
+import django.db
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -28,77 +29,40 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
+class PlayerSerializer(serializers.ModelSerializer):
+
+    username = serializers.CharField(source='user.username')
+
+    class Meta:
+        model = models.Player
+        fields = ('id', 'username')
+
+
+class ObjectiveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Objective
+        fields = ('id', 'name')
+
+
+class ObjectiveDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Objective
+        fields = ('id', 'name')
+
+
 class MissionSerializer(serializers.ModelSerializer):
+
+    objectives = ObjectiveSerializer(many=True)
+
     class Meta:
         model = models.Mission
-        fields = ('id', 'name', 'value', 'latitude', 'longitude')
+        fields = ('id', 'name', 'objectives')
 
-# class UserSerializer(serializers.ModelSerializer):
-#     email = serializers.EmailField(
-#         required=True,
-#         validators=[UniqueValidator(queryset=User.objects.all())]
-#     )
-#
-#     username = serializers.CharField(
-#         max_length=32,
-#         validators=[UniqueValidator(queryset=User.objects.all())]
-#     )
-#
-#     password = serializers.CharField(
-#         min_length=8,
-#         write_only=True
-#     )
-#
-#     def create(self, validated_data):
-#         user = User.objects.create_user(
-#             validated_data['username'],
-#             validated_data['email'],
-#             validated_data['password']
-#         )
-#
-#         return user
-#
-#     class Meta:
-#         model = User
-#         fields = ('id', 'username', 'email', 'password')
-#
-#
-# class CoordinateSerializer(serializers.Serializer):
-#     latitude = serializers.FloatField()
-#     longitude = serializers.FloatField()
-#
-#
-# class MissionSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = models.Mission
-#         fields = ('id', 'name', 'value', 'latitude', 'longitude')
-#
-#
-# class MissionDistanceSerializer(serializers.Serializer):
-#     distance = serializers.FloatField()
-#     mission = MissionSerializer()
-#
-#
-# class RegionSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = models.Region
-#         fields = '__all__'
-#
-#
-# class MissionDetailSerializer(serializers.ModelSerializer):
-#     region = RegionSerializer()
-#
-#     class Meta:
-#         model = models.Mission
-#         fields = '__all__'
-#
-#
-# class UsernameSerializer(serializers.Serializer):
-#     username = serializers.CharField()
-#
-#
-# class UserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         # TODO: Add associated player's score
-#         fields = ('id', 'username')
+
+class MissionDetailSerializer(serializers.ModelSerializer):
+
+    objectives = ObjectiveSerializer(many=True)
+
+    class Meta:
+        model = models.Mission
+        fields = ('id', 'name', 'value', 'category', 'objectives')

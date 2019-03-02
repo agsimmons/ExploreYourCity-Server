@@ -31,41 +31,37 @@ class Category(models.Model):
         return self.name
 
 
-class Location(models.Model):
-    categories = models.ManyToManyField(Category)
-
+class Objective(models.Model):
     # Google Maps metadata
     name = models.TextField()
+
     latitude = models.FloatField()
     longitude = models.FloatField()
+
     formatted_address = models.TextField()
     google_id = models.TextField()
     place_id = models.TextField()
     reference = models.TextField()
 
     def __str__(self):
-        return f'{self.name} - {self.latitude},{self.longitude}'
+        return f'{self.name} - {self.formatted_address}'
 
 
 class Mission(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200)  # TODO: Remove?
     value = models.IntegerField()
+
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     latitude = models.FloatField()
     longitude = models.FloatField()
 
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
 
+    objectives = models.ManyToManyField(Objective)
+
     def __str__(self):
         return f'{self.name} - {self.region.name}'
-
-
-class Objective(models.Model):
-    mission = models.ForeignKey(Mission, on_delete=models.CASCADE)
-    location = models.ForeignKey(Location, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f'Mission: {self.mission.name} - Location: {self.location.name}'
 
 
 class Player(models.Model):
@@ -73,11 +69,19 @@ class Player(models.Model):
     score = models.IntegerField(default=0)
     friends = models.ManyToManyField('self', blank=True)
 
-    missions_active = models.ManyToManyField(Mission, blank=True)
-    missions_completed = models.ManyToManyField(Mission, blank=True)
+    active_missions = models.ManyToManyField(Mission,
+                                             blank=True,
+                                             related_name='+')
+    completed_missions = models.ManyToManyField(Mission,
+                                                blank=True,
+                                                related_name='+')
 
-    objectives_active = models.ManyToManyField(Objective, blank=True)
-    objectives_completed = models.ManyToManyField(Objective, blank=True)
+    active_objectives = models.ManyToManyField(Objective,
+                                               blank=True,
+                                               related_name='+')
+    completed_objectives = models.ManyToManyField(Objective,
+                                                  blank=True,
+                                                  related_name='+')
 
     def __str__(self):
         return self.user.username
