@@ -32,16 +32,13 @@ class Category(models.Model):
 
 
 class Objective(models.Model):
-    # Google Maps metadata
     name = models.TextField()
 
     latitude = models.FloatField()
     longitude = models.FloatField()
 
     formatted_address = models.TextField()
-    google_id = models.TextField()
-    place_id = models.TextField()
-    reference = models.TextField()
+    gmaps_id = models.TextField()
 
     def __str__(self):
         return f'{self.name} - {self.formatted_address}'
