@@ -1,0 +1,94 @@
+[
+    {
+        "model": "api.category",
+        "pk": 1,
+        "fields": {
+            "name": "Academia",
+            "types": [
+                49,
+                75
+            ]
+        }
+    },
+    {
+        "model": "api.category",
+        "pk": 2,
+        "fields": {
+            "name": "Food & Drink",
+            "types": [
+                7,
+                9,
+                15,
+                54,
+                55,
+                72,
+                83
+            ]
+        }
+    },
+    {
+        "model": "api.category",
+        "pk": 3,
+        "fields": {
+            "name": "Recreation",
+            "types": [
+                3,
+                4,
+                13,
+                16,
+                21,
+                58,
+                61,
+                63,
+                77,
+                78,
+                79,
+                90
+            ]
+        }
+    },
+    {
+        "model": "api.category",
+        "pk": 4,
+        "fields": {
+            "name": "Health",
+            "types": [
+                28,
+                30,
+                44,
+                67
+            ]
+        }
+    },
+    {
+        "model": "api.category",
+        "pk": 5,
+        "fields": {
+            "name": "Shopping",
+            "types": [
+                11,
+                12,
+                25,
+                37,
+                41,
+                43,
+                76,
+                81
+            ]
+        }
+    },
+    {
+        "model": "api.category",
+        "pk": 6,
+        "fields": {
+            "name": "Religion",
+            "types": [
+                22,
+                23,
+                42,
+                56,
+                84
+            ]
+        }
+    }
+]
