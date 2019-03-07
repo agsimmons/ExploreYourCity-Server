@@ -47,6 +47,7 @@ class PlayerViewSet(mixins.ListModelMixin,
 
         return Response(status=status.HTTP_200_OK)
 
+    # TODO: Update for new mission/objective format
     @action(detail=True, methods=['GET'])
     def active_missions(self, request, pk=None):
         """
@@ -64,6 +65,7 @@ class PlayerViewSet(mixins.ListModelMixin,
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
+    # TODO: Update for new mission/objective format
     @action(detail=True, methods=['GET'])
     def completed_missions(self, request, pk=None):
         """
@@ -81,6 +83,7 @@ class PlayerViewSet(mixins.ListModelMixin,
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
+    # TODO: Update for new mission/objective format
     @action(detail=True, methods=['GET'])
     def active_objectives(self, request, pk=None):
         try:
@@ -94,6 +97,7 @@ class PlayerViewSet(mixins.ListModelMixin,
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
+    # TODO: Update for new mission/objective format
     @action(detail=True, methods=['GET'])
     def completed_objectives(self, request, pk=None):
         try:
