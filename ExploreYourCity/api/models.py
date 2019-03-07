@@ -45,7 +45,6 @@ class Objective(models.Model):
 
 
 class Mission(models.Model):
-    name = models.CharField(max_length=200)  # TODO: Remove?
     value = models.IntegerField()
 
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
@@ -58,7 +57,7 @@ class Mission(models.Model):
     objectives = models.ManyToManyField(Objective)
 
     def __str__(self):
-        return f'{self.name} - {self.region.name}'
+        return f'{self.category.name} - {self.id}'
 
 
 class Player(models.Model):
