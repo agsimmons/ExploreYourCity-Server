@@ -65,19 +65,14 @@ class Player(models.Model):
     score = models.IntegerField(default=0)
     friends = models.ManyToManyField('self', blank=True)
 
-    active_missions = models.ManyToManyField(Mission,
-                                             blank=True,
-                                             related_name='+')
-    completed_missions = models.ManyToManyField(Mission,
-                                                blank=True,
-                                                related_name='+')
-
-    active_objectives = models.ManyToManyField(Objective,
-                                               blank=True,
-                                               related_name='+')
-    completed_objectives = models.ManyToManyField(Objective,
-                                                  blank=True,
-                                                  related_name='+')
-
     def __str__(self):
         return self.user.username
+
+
+class ObjectivePlayer(models.Model):
+    class Meta:
+        unique_together = (('player', 'objective'),)
+
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    objective = models.ForeignKey(Objective, on_delete=models.CASCADE)
+    completed = models.BooleanField(default=False)
