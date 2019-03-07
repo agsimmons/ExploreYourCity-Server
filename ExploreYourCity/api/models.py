@@ -2,16 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User as DjangoUser
 
 
-class Region(models.Model):
-    name = models.CharField(max_length=100)
-    latitude = models.FloatField()
-    longitude = models.FloatField()
-    radius = models.FloatField()
-
-    def __str__(self):
-        return f'{self.name} - {self.latitude},{self.longitude} - Radius: {self.radius}km'
-
-
 # https://developers.google.com/places/supported_types
 class Type(models.Model):
     name = models.TextField()
@@ -51,8 +41,6 @@ class Mission(models.Model):
 
     latitude = models.FloatField()
     longitude = models.FloatField()
-
-    region = models.ForeignKey(Region, on_delete=models.CASCADE)
 
     objectives = models.ManyToManyField(Objective)
 
