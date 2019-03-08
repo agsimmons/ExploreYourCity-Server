@@ -1,0 +1,62 @@
+[
+    {
+        "model": "api.objective",
+        "pk": 1,
+        "fields": {
+            "name": "The C Store",
+            "latitude": 42.336338,
+            "longitude": -71.097212,
+            "formatted_address": "61-99 Vancouver St, Boston, MA 02120",
+            "gmaps_id": "1234567890",
+            "mission": 1
+        }
+    },
+    {
+        "model": "api.objective",
+        "pk": 2,
+        "fields": {
+            "name": "Wentworth Institute of Technology",
+            "latitude": 42.336089,
+            "longitude": -71.095388,
+            "formatted_address": "550 Huntington Ave, Boston, MA 02115",
+            "gmaps_id": "97654321",
+            "mission": 1
+        }
+    },
+    {
+        "model": "api.objective",
+        "pk": 3,
+        "fields": {
+            "name": "Boston Children's Museum",
+            "latitude": 42.352954,
+            "longitude": -71.050404,
+            "formatted_address": "308 Congress St, Boston, MA 02210",
+            "gmaps_id": "5678",
+            "mission": 2
+        }
+    },
+    {
+        "model": "api.objective",
+        "pk": 4,
+        "fields": {
+            "name": "Museum of Fine Arts, Boston",
+            "latitude": 42.339416,
+            "longitude": -71.094041,
+            "formatted_address": "465 Huntington Ave, Boston, MA 02115",
+            "gmaps_id": "23",
+            "mission": 2
+        }
+    },
+    {
+        "model": "api.objective",
+        "pk": 5,
+        "fields": {
+            "name": "Isabella Stewart Gardner Museum",
+            "latitude": 42.338696,
+            "longitude": -71.098946,
+            "formatted_address": "25 Evans Way, Boston, MA 02115",
+            "gmaps_id": "888",
+            "mission": 2
+        }
+    }
+]
