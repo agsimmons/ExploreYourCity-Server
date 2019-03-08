@@ -130,19 +130,26 @@ class PlayerViewSet(mixins.ListModelMixin,
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
-    # # TODO: Update for new mission/objective format
-    # @action(detail=True, methods=['GET'])
-    # def completed_objectives(self, request, pk=None):
-    #     try:
-    #         player = models.Player.objects.get(pk=pk)
-    #     except models.Player.DoesNotExist:
-    #         return Response(status=status.HTTP_404_NOT_FOUND)
-    #
-    #     objectives = player.completed_objectives.all()
-    #
-    #     serializer = serializers.ObjectiveSerializer(objectives, many=True)
-    #
-    #     return Response(data=serializer.data, status=status.HTTP_200_OK)
+    @action(detail=True, methods=['GET'])
+    def completed_objectives(self, request, pk=None):
+        """
+        Returns a list of specified player's completed objectives
+        """
+
+        try:
+            player = models.Player.objects.get(pk=pk)
+        except models.Player.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        objective_player_relations = models.ObjectivePlayer.objects.filter(player__id=player.id, completed=True)
+
+        objectives = []
+        for entry in objective_player_relations:
+            objectives.append(entry.objective)
+
+        serializer = serializers.ObjectiveDetailSerializer(objectives, many=True)
+
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
 # /missions/
@@ -171,6 +178,21 @@ class MissionViewSet(mixins.ListModelMixin,
         for objective in objectives:
             objective_player = models.ObjectivePlayer(objective=objective, player=player)
             objective_player.save()
+
+        return Response(status=status.HTTP_200_OK)
+
+    # TODO: Don't allow dropping a completed mission
+    @action(detail=True, methods=['GET'])
+    def drop(self, request, pk=None):
+        try:
+            mission = models.Mission.objects.get(pk=pk)
+        except models.Mission.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        objective_player_relations = models.ObjectivePlayer.objects.filter(objective__mission_id=mission.id)
+
+        for relation in objective_player_relations:
+            relation.delete()
 
         return Response(status=status.HTTP_200_OK)
 
