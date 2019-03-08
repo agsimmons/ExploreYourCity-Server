@@ -87,15 +87,15 @@ class PlayerViewSet(mixins.ListModelMixin,
         except models.Player.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        started_objectives = models.ObjectivePlayer.objects.filter(player__id=player.id)
+        objective_player_relations = models.ObjectivePlayer.objects.filter(player__id=player.id)
 
         unique_mission_ids = set()
-        for objective in started_objectives:
-            unique_mission_ids.add(objective.objective.mission.id)
+        for relation in objective_player_relations:
+            unique_mission_ids.add(relation.objective.mission.id)
 
         completed_missions = []
         for mission_id in unique_mission_ids:
-            objectives_under_mission = started_objectives.filter(objective__mission__id=mission_id)
+            objectives_under_mission = objective_player_relations.filter(objective__mission__id=mission_id)
             completed = True
             for mission_objective in objectives_under_mission:
                 if not mission_objective.completed:
@@ -109,17 +109,24 @@ class PlayerViewSet(mixins.ListModelMixin,
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
-    # TODO: Update for new mission/objective format
     @action(detail=True, methods=['GET'])
     def active_objectives(self, request, pk=None):
+        """
+        Returns a list of specified player's active objectives
+        """
+
         try:
             player = models.Player.objects.get(pk=pk)
         except models.Player.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        objectives = player.active_objectives.all()
+        objective_player_relations = models.ObjectivePlayer.objects.filter(player__id=player.id, completed=False)
 
-        serializer = serializers.ObjectiveSerializer(objectives, many=True)
+        objectives = []
+        for entry in objective_player_relations:
+            objectives.append(entry.objective)
+
+        serializer = serializers.ObjectiveDetailSerializer(objectives, many=True)
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
