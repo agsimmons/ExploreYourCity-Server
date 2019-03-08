@@ -1,5 +1,7 @@
 import math
 
+from . import models
+
 EARTH_RADIUS_IN_KM = 6371
 
 
@@ -19,3 +21,26 @@ def distance_between_coordinates(coord1, coord2):
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
 
     return EARTH_RADIUS_IN_KM * c
+
+
+# Returns list of completed mission by specified player
+def get_completed_missions(player):
+    objective_player_relations = models.ObjectivePlayer.objects.filter(player__id=player.id)
+
+    unique_mission_ids = set()
+    for relation in objective_player_relations:
+        unique_mission_ids.add(relation.objective.mission.id)
+
+    completed_missions = []
+    for mission_id in unique_mission_ids:
+        objectives_under_mission = objective_player_relations.filter(objective__mission__id=mission_id)
+        completed = True
+        for mission_objective in objectives_under_mission:
+            if not mission_objective.completed:
+                completed = False
+                break
+        if completed:
+            mission = models.Mission.objects.get(pk=mission_id)
+            completed_missions.append(mission)
+
+    return completed_missions
