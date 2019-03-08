@@ -21,6 +21,18 @@ class Category(models.Model):
         return self.name
 
 
+class Mission(models.Model):
+    value = models.IntegerField()
+
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+
+    def __str__(self):
+        return f'{self.category.name} - {self.id}'
+
+
 class Objective(models.Model):
     name = models.TextField()
 
@@ -30,22 +42,10 @@ class Objective(models.Model):
     formatted_address = models.TextField()
     gmaps_id = models.TextField()
 
+    mission = models.ForeignKey(Mission, on_delete=models.CASCADE)
+
     def __str__(self):
         return f'{self.name} - {self.formatted_address}'
-
-
-class Mission(models.Model):
-    value = models.IntegerField()
-
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-
-    latitude = models.FloatField()
-    longitude = models.FloatField()
-
-    objectives = models.ManyToManyField(Objective)
-
-    def __str__(self):
-        return f'{self.category.name} - {self.id}'
 
 
 class Player(models.Model):
@@ -64,3 +64,6 @@ class ObjectivePlayer(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     objective = models.ForeignKey(Objective, on_delete=models.CASCADE)
     completed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.objective.__str__()} - {self.player.__str__()} - Completed: {self.completed}'

@@ -7,4 +7,4 @@ admin.site.register(models.Category)
 admin.site.register(models.Mission)
 admin.site.register(models.Objective)
 admin.site.register(models.Player)
-
+admin.site.register(models.ObjectivePlayer)
