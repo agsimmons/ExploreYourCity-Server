@@ -80,7 +80,7 @@ class PlayerViewSet(mixins.ListModelMixin,
     def completed_missions(self, request, pk=None):
         """
                 Returns a list of specified player's completed missions
-         """
+        """
 
         try:
             player = models.Player.objects.get(pk=pk)
@@ -109,20 +109,20 @@ class PlayerViewSet(mixins.ListModelMixin,
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
-    # # TODO: Update for new mission/objective format
-    # @action(detail=True, methods=['GET'])
-    # def active_objectives(self, request, pk=None):
-    #     try:
-    #         player = models.Player.objects.get(pk=pk)
-    #     except models.Player.DoesNotExist:
-    #         return Response(status=status.HTTP_404_NOT_FOUND)
-    #
-    #     objectives = player.active_objectives.all()
-    #
-    #     serializer = serializers.ObjectiveSerializer(objectives, many=True)
-    #
-    #     return Response(data=serializer.data, status=status.HTTP_200_OK)
-    #
+    # TODO: Update for new mission/objective format
+    @action(detail=True, methods=['GET'])
+    def active_objectives(self, request, pk=None):
+        try:
+            player = models.Player.objects.get(pk=pk)
+        except models.Player.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        objectives = player.active_objectives.all()
+
+        serializer = serializers.ObjectiveSerializer(objectives, many=True)
+
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
     # # TODO: Update for new mission/objective format
     # @action(detail=True, methods=['GET'])
     # def completed_objectives(self, request, pk=None):
