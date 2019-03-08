@@ -50,7 +50,9 @@ class PlayerViewSet(mixins.ListModelMixin,
         If authentication credentials are invalid, status 401
         """
 
-        return Response({'id': request.user.player.id}, status=status.HTTP_200_OK)
+        serializer = serializers.PlayerSerializer(request.user.player)
+
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     @action(detail=True, methods=['GET'])
     def active_missions(self, request, pk=None):
