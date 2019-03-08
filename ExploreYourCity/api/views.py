@@ -155,8 +155,6 @@ class MissionViewSet(mixins.ListModelMixin,
     queryset = models.Mission.objects.all()
     serializer_class = serializers.MissionDetailSerializer
 
-    # TODO: Display missions with objective list correctly
-
     @action(detail=True, methods=['GET'])
     def objectives(self, request, pk=None):
         """
