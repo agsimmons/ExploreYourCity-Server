@@ -19,6 +19,16 @@ class UserViewSet(mixins.CreateModelMixin,
     queryset = User.objects.all()
     serializer_class = serializers.UserSerializer
 
+    @action(detail=False, methods=['DELETE'])
+    def remove_account(self, request):
+        """
+        Deletes authenticated player's account
+        """
+
+        request.user.delete()
+
+        return Response(status=status.HTTP_200_OK)
+
 
 # /players/
 class PlayerViewSet(mixins.ListModelMixin,
