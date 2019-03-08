@@ -229,6 +229,29 @@ class ObjectiveViewSet(mixins.ListModelMixin,  # TODO: Remove ListModelMixin?
     queryset = models.Objective.objects.all()
     serializer_class = serializers.ObjectiveDetailSerializer
 
+    @action(detail=True, methods=['GET'])
+    def complete(self, request, pk=None):
+        """
+        Mark specified objective as complete by current player if in list of active objectives
+        """
+
+        try:
+            objective = models.Objective.objects.get(pk=pk)
+        except models.Objective.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        player = request.user.player
+
+        try:
+            objective_player_relation = models.ObjectivePlayer.objects.filter(objective__id=objective.id, player__id=player.id).get()
+        except models.ObjectivePlayer.DoesNotExist:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+        objective_player_relation.completed = True
+        objective_player_relation.save()
+
+        return Response(status=status.HTTP_200_OK)
+
 
 # # Get missions sorted by distance from user
 # # GET
