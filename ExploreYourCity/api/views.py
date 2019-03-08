@@ -29,6 +29,11 @@ class UserViewSet(mixins.CreateModelMixin,
 
         return Response(status=status.HTTP_200_OK)
 
+    def get_permissions(self):
+        if self.request.method == 'POST':
+            return []
+        return super().get_permissions()
+
 
 # /players/
 class PlayerViewSet(mixins.ListModelMixin,
@@ -110,11 +115,6 @@ class PlayerViewSet(mixins.ListModelMixin,
     #     serializer = serializers.ObjectiveSerializer(objectives, many=True)
     #
     #     return Response(data=serializer.data, status=status.HTTP_200_OK)
-
-    def get_permissions(self):
-        if self.request.method == 'POST':
-            return []
-        return super().get_permissions()
 
 
 # /missions/
