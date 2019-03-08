@@ -67,7 +67,6 @@ class PlayerViewSet(mixins.ListModelMixin,
 
         unique_mission_ids = set()
         for objective in active_objectives:
-            print(objective)
             unique_mission_ids.add(objective.objective.mission.id)
 
         unique_missions = []
