@@ -35,7 +35,7 @@ class PlayerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Player
-        fields = ('id', 'username')
+        fields = ('id', 'username', 'score')
 
 
 class ObjectiveSerializer(serializers.ModelSerializer):
