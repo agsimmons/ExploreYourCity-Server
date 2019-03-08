@@ -44,3 +44,18 @@ def get_completed_missions(player):
             completed_missions.append(mission)
 
     return completed_missions
+
+
+# Returns list of active mission by specified player
+def get_active_missions(player):
+    active_objectives = models.ObjectivePlayer.objects.filter(player__id=player.id, completed=False)
+
+    unique_mission_ids = set()
+    for objective in active_objectives:
+        unique_mission_ids.add(objective.objective.mission.id)
+
+    unique_missions = []
+    for mission_id in list(unique_mission_ids):
+        unique_missions.append(models.Mission.objects.get(pk=mission_id))
+
+    return unique_missions

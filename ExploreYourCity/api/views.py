@@ -81,17 +81,9 @@ class PlayerViewSet(mixins.ListModelMixin,
         except models.Player.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        active_objectives = models.ObjectivePlayer.objects.filter(player__id=player.id, completed=False)
+        active_missions = functions.get_active_missions(player)
 
-        unique_mission_ids = set()
-        for objective in active_objectives:
-            unique_mission_ids.add(objective.objective.mission.id)
-
-        unique_missions = []
-        for mission_id in list(unique_mission_ids):
-            unique_missions.append(models.Mission.objects.get(pk=mission_id))
-
-        serializer = serializers.MissionDetailSerializer(unique_missions, many=True)
+        serializer = serializers.MissionDetailSerializer(active_missions, many=True)
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
