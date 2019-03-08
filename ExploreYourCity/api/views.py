@@ -79,7 +79,7 @@ class PlayerViewSet(mixins.ListModelMixin,
     @action(detail=True, methods=['GET'])
     def completed_missions(self, request, pk=None):
         """
-                Returns a list of specified player's completed missions
+        Returns a list of specified player's completed missions
         """
 
         try:
