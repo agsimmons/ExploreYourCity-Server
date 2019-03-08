@@ -52,24 +52,32 @@ class PlayerViewSet(mixins.ListModelMixin,
 
         return Response({'id': request.user.player.id}, status=status.HTTP_200_OK)
 
-    # # TODO: Update for new mission/objective format
-    # @action(detail=True, methods=['GET'])
-    # def active_missions(self, request, pk=None):
-    #     """
-    #     Returns a list of specified player's active missions
-    #     """
-    #
-    #     try:
-    #         player = models.Player.objects.get(pk=pk)
-    #     except models.Player.DoesNotExist:
-    #         return Response(status=status.HTTP_404_NOT_FOUND)
-    #
-    #     missions = player.active_missions.all()
-    #
-    #     serializer = serializers.MissionSerializer(missions, many=True)
-    #
-    #     return Response(data=serializer.data, status=status.HTTP_200_OK)
-    #
+    @action(detail=True, methods=['GET'])
+    def active_missions(self, request, pk=None):
+        """
+        Returns a list of specified player's active missions
+        """
+
+        try:
+            player = models.Player.objects.get(pk=pk)
+        except models.Player.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        active_objectives = models.ObjectivePlayer.objects.filter(player__id=player.id, completed=False)
+
+        unique_mission_ids = set()
+        for objective in active_objectives:
+            print(objective)
+            unique_mission_ids.add(objective.objective.mission.id)
+
+        unique_missions = []
+        for mission_id in list(unique_mission_ids):
+            unique_missions.append(models.Mission.objects.get(pk=mission_id))
+
+        serializer = serializers.MissionDetailSerializer(unique_missions, many=True)
+
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
     # # TODO: Update for new mission/objective format
     # @action(detail=True, methods=['GET'])
     # def completed_missions(self, request, pk=None):
