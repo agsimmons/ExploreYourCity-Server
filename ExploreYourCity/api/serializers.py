@@ -50,19 +50,28 @@ class ObjectiveDetailSerializer(serializers.ModelSerializer):
         fields = ('id', 'name')
 
 
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Category
+        fields = ('id', 'name')
+
+
 class MissionSerializer(serializers.ModelSerializer):
 
-    objectives = ObjectiveSerializer(many=True)
+    # objectives = ObjectiveSerializer(many=True)
 
     class Meta:
         model = models.Mission
-        fields = ('id', 'objectives')
+        # fields = ('id', 'objectives')
+        fields = ('id',)
 
 
 class MissionDetailSerializer(serializers.ModelSerializer):
 
-    objectives = ObjectiveSerializer(many=True)
+    # objectives = ObjectiveSerializer(many=True)
+    category = CategorySerializer()
 
     class Meta:
         model = models.Mission
-        fields = ('id', 'value', 'category', 'objectives')
+        # fields = ('id', 'value', 'category', 'objectives')
+        fields = ('id', 'value', 'category')
