@@ -28,6 +28,13 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
+class CoordinateSerializer(serializers.Serializer):
+    latitude = serializers.FloatField(min_value=-90.0,
+                                      max_value=90.0)
+
+    longitude = serializers.FloatField(min_value=-180.0,
+                                       max_value=180.0)
+
 class PlayerSerializer(serializers.ModelSerializer):
 
     username = serializers.CharField(source='user.username')
@@ -72,5 +79,5 @@ class MissionDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Mission
-        # fields = ('id', 'value', 'category', 'objectives')
-        fields = ('id', 'value', 'category')
+        # fields = ('id', 'category', 'objectives')
+        fields = ('id', 'category')
