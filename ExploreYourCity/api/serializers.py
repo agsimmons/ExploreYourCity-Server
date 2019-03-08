@@ -46,7 +46,7 @@ class ObjectiveSerializer(serializers.ModelSerializer):
 class ObjectiveDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Objective
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'formatted_address', 'latitude', 'longitude')
 
 
 class CategorySerializer(serializers.ModelSerializer):
