@@ -56,7 +56,7 @@ class MissionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Mission
-        fields = ('id', 'name', 'objectives')
+        fields = ('id', 'objectives')
 
 
 class MissionDetailSerializer(serializers.ModelSerializer):
@@ -65,4 +65,4 @@ class MissionDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Mission
-        fields = ('id', 'name', 'value', 'category', 'objectives')
+        fields = ('id', 'value', 'category', 'objectives')
