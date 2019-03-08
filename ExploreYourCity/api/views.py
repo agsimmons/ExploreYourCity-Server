@@ -163,6 +163,23 @@ class MissionViewSet(mixins.ListModelMixin,
     # TODO: Display missions with objective list correctly
 
     @action(detail=True, methods=['GET'])
+    def objectives(self, request, pk=None):
+        """
+        Returns a list of objectives belonging to specified mission
+        """
+
+        try:
+            mission = models.Mission.objects.get(pk=pk)
+        except models.Mission.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        objectives = models.Objective.objects.filter(mission__id=mission.id)
+
+        serializer = serializers.ObjectiveDetailSerializer(objectives, many=True)
+
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=['GET'])
     def start(self, request, pk=None):
         try:
             mission = models.Mission.objects.get(pk=pk)
