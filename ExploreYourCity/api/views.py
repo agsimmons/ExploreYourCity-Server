@@ -125,6 +125,27 @@ class MissionViewSet(mixins.ListModelMixin,
     queryset = models.Mission.objects.all()
     serializer_class = serializers.MissionDetailSerializer
 
+    # TODO: Display missions with objective list correctly
+
+    @action(detail=True, methods=['GET'])
+    def start(self, request, pk=None):
+        try:
+            mission = models.Mission.objects.get(pk=pk)
+        except models.Mission.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        objectives = models.Objective.objects.filter(mission__id=mission.id)
+
+        player = request.user.player
+
+        # TODO: Check if mission is already active or completed. Abstract this to functions.py
+
+        for objective in objectives:
+            objective_player = models.ObjectivePlayer(objective=objective, player=player)
+            objective_player.save()
+
+        return Response(status=status.HTTP_200_OK)
+
 
 # /objectives/
 class ObjectiveViewSet(mixins.ListModelMixin,  # TODO: Remove ListModelMixin?
