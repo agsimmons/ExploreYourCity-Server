@@ -50,7 +50,6 @@ class Objective(models.Model):
 
 class Player(models.Model):
     user = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)
-    score = models.IntegerField(default=0)
     friends = models.ManyToManyField('self', blank=True)
 
     def __str__(self):

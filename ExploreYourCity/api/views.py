@@ -52,6 +52,25 @@ class PlayerViewSet(mixins.ListModelMixin,
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     @action(detail=True, methods=['GET'])
+    def score(self, request, pk=None):
+        """
+        Returns score of specified player
+        """
+
+        try:
+            player = models.Player.objects.get(pk=pk)
+        except models.Player.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        completed_missions = functions.get_completed_missions(player)
+
+        score = 0
+        for mission in completed_missions:
+            score += mission.value
+
+        return Response(data={"score": score}, status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=['GET'])
     def active_missions(self, request, pk=None):
         """
         Returns a list of specified player's active missions
