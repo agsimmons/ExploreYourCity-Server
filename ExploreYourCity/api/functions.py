@@ -18,4 +18,4 @@ def distance_between_coordinates(coord1, coord2):
     a = (math.sin(d_lat / 2) ** 2) + ((math.sin(d_lon / 2) ** 2) * math.cos(lat1) * math.cos(lat2))
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
 
-    return EARTH_RADIUS_IN_KM * c;
+    return EARTH_RADIUS_IN_KM * c
