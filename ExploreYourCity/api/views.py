@@ -155,6 +155,43 @@ class MissionViewSet(mixins.ListModelMixin,
     queryset = models.Mission.objects.all()
     serializer_class = serializers.MissionDetailSerializer
 
+    @action(detail=False, methods=['GET'])
+    def available(self, request):
+        """
+        Returns a list of available missions sorted by distance to authenticated player\n
+        Pass latitude and longitude in JSON format
+        """
+
+        coordinate_serializer = serializers.CoordinateSerializer(data=request.data)
+
+        if coordinate_serializer.is_valid():
+            player_coordinates = (coordinate_serializer.validated_data['latitude'],
+                                  coordinate_serializer.validated_data['longitude'])
+
+            # Get all missions which have not been started or completed by the player
+            all_missions = set(models.Mission.objects.all())
+            completed_missions = set(functions.get_completed_missions(request.user.player))
+            new_missions = list(all_missions - completed_missions)
+
+            # Calculate distances between player and mission
+            mission_distances = []
+            for mission in new_missions:
+                mission_coordinates = (mission.latitude, mission.longitude)
+                distance = functions.distance_between_coordinates(player_coordinates, mission_coordinates)
+                mission_distances.append((distance, mission))
+
+            mission_distances_sorted = sorted(mission_distances, key=operator.itemgetter(0))
+
+            missions_sorted = []
+            for distance_mission in mission_distances_sorted:
+                missions_sorted.append(distance_mission[1])
+
+            mission_serializer = serializers.MissionDetailSerializer(missions_sorted, many=True)
+
+            return Response(data=mission_serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(coordinate_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     @action(detail=True, methods=['GET'])
     def objectives(self, request, pk=None):
         """
