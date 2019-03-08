@@ -181,6 +181,9 @@ class MissionViewSet(mixins.ListModelMixin,
 
     @action(detail=True, methods=['GET'])
     def start(self, request, pk=None):
+        """
+        Adds the specified mission to current player's list of active missions
+        """
         try:
             mission = models.Mission.objects.get(pk=pk)
         except models.Mission.DoesNotExist:
@@ -201,6 +204,10 @@ class MissionViewSet(mixins.ListModelMixin,
     # TODO: Don't allow dropping a completed mission
     @action(detail=True, methods=['GET'])
     def drop(self, request, pk=None):
+        """
+        Drops the specified mission from current player's list of active missions\n
+        NOTE: Will currently also remove completed missions
+        """
         try:
             mission = models.Mission.objects.get(pk=pk)
         except models.Mission.DoesNotExist:
