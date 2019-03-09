@@ -252,8 +252,7 @@ class MissionViewSet(mixins.ListModelMixin,
 
 
 # /objectives/
-class ObjectiveViewSet(mixins.ListModelMixin,  # TODO: Remove ListModelMixin?
-                       mixins.RetrieveModelMixin,
+class ObjectiveViewSet(mixins.RetrieveModelMixin,
                        viewsets.GenericViewSet):
 
     queryset = models.Objective.objects.all()
