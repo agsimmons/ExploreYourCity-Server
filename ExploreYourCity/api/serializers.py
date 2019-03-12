@@ -35,13 +35,13 @@ class CoordinateSerializer(serializers.Serializer):
     longitude = serializers.FloatField(min_value=-180.0,
                                        max_value=180.0)
 
-class PlayerSerializer(serializers.ModelSerializer):
 
+class PlayerSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='user.username')
 
     class Meta:
         model = models.Player
-        fields = ('id', 'username', 'score')
+        fields = ('id', 'username')
 
 
 class ObjectiveSerializer(serializers.ModelSerializer):
