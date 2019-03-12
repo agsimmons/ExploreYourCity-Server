@@ -280,39 +280,3 @@ class ObjectiveViewSet(mixins.RetrieveModelMixin,
         objective_player_relation.save()
 
         return Response(status=status.HTTP_200_OK)
-
-
-# # Get missions sorted by distance from user
-# # GET
-# # /missions
-# # Body:
-# #     latitude: current latitude
-# #     longitude: current longitude
-# class Missions(APIView):
-#     def get(self, request, format=None):
-#         coordinate_serializer = serializers.CoordinateSerializer(data=request.data)
-#
-#         # If passed latitude and longitude is valid
-#         if coordinate_serializer.is_valid():
-#             lat = coordinate_serializer.validated_data['latitude']
-#             lon = coordinate_serializer.validated_data['longitude']
-#
-#             missions = models.Mission.objects.all()
-#             mission_distance_list = []
-#             for mission in missions:
-#                 distance = functions.distance_between_coordinates((lat, lon),
-#                                                                   (mission.latitude, mission.longitude))
-#                 mission_distance_list.append((distance, mission))
-#             mission_distance_list.sort(key=operator.itemgetter(0))
-#
-#             return_mission_list = []
-#             for mission in mission_distance_list:
-#                 return_mission_list.append({
-#                     'distance': mission[0],
-#                     'mission': mission[1]
-#                 })
-#
-#             mission_distance_serializer = serializers.MissionDistanceSerializer(return_mission_list, many=True)
-#             return Response(mission_distance_serializer.data, status=status.HTTP_200_OK)
-#         else:
-#             return Response(coordinate_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
