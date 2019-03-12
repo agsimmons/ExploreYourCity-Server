@@ -332,7 +332,6 @@ class RequestViewSet(viewsets.ViewSet):
 
         # Add friend relation
         from_player.friends.add(to_player)
-        # TODO: Do I need to save?
 
         return Response(status=status.HTTP_200_OK)
 
