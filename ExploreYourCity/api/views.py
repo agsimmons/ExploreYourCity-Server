@@ -335,3 +335,22 @@ class RequestViewSet(viewsets.ViewSet):
         # TODO: Do I need to save?
 
         return Response(status=status.HTTP_200_OK)
+
+    # TODO: This should probably be a DELETE request
+    @action(detail=True, methods=['GET'])
+    def decline(self, request, pk=None):
+        player = request.user.player
+        try:
+            queryset = models.Request.objects.get(pk=pk)
+        except models.Request.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        # Restrict access to recipient
+        # NOTE: This allows for side-channel attacks, as requests that exist return 403 without access, and 404 for requests that don't exist
+        if queryset.request_to.id != player.id:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+        # Delete request
+        queryset.delete()
+
+        return Response(status=status.HTTP_200_OK)
