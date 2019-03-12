@@ -51,6 +51,19 @@ class PlayerViewSet(mixins.ListModelMixin,
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
+    @action(detail=False, methods=['GET'])
+    def friends(self, request):
+        """
+        Returns a list of friends of the authenticated user
+        """
+
+        player = request.user.player
+        queryset = player.friends
+
+        serializer = serializers.PlayerSerializer(queryset, many=True)
+
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
     @action(detail=True, methods=['GET'])
     def score(self, request, pk=None):
         """
