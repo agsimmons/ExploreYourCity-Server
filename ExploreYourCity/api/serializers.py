@@ -75,3 +75,12 @@ class MissionDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Mission
         fields = ('id', 'category')
+
+
+class RequestSerializer(serializers.ModelSerializer):
+    request_from = PlayerSerializer()
+    request_to = PlayerSerializer()
+
+    class Meta:
+        model = models.Request
+        fields = ('id', 'request_from', 'request_to')

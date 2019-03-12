@@ -280,3 +280,58 @@ class ObjectiveViewSet(mixins.RetrieveModelMixin,
         objective_player_relation.save()
 
         return Response(status=status.HTTP_200_OK)
+
+
+# /requests/
+class RequestViewSet(viewsets.ViewSet):
+    def list(self, request):
+        player = request.user.player
+        queryset = models.Request.objects.filter(request_to=player)
+
+        serializer = serializers.RequestSerializer(queryset, many=True)
+
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+    def retrieve(self, request, pk=None):
+        player = request.user.player
+        try:
+            queryset = models.Request.objects.get(pk=pk)
+        except models.Request.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        # Restrict access to recipient
+        # NOTE: This allows for side-channel attacks, as requests that exist return 403 without access, and 404 for requests that don't exist
+        if queryset.request_to.id != player.id:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+        serializer = serializers.RequestSerializer(queryset)
+
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=['GET'])
+    def accept(self, request, pk=None):
+        player = request.user.player
+        try:
+            queryset = models.Request.objects.get(pk=pk)
+        except models.Request.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        # Restrict access to recipient
+        # NOTE: This allows for side-channel attacks, as requests that exist return 403 without access, and 404 for requests that don't exist
+        if queryset.request_to.id != player.id:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+        # Get from and to players
+        from_player = queryset.request_from
+        to_player = queryset.request_to
+
+        # Delete request
+        queryset.delete()
+
+        # TODO: Check if friend relation already exists when sending the request
+
+        # Add friend relation
+        from_player.friends.add(to_player)
+        # TODO: Do I need to save?
+
+        return Response(status=status.HTTP_200_OK)

@@ -12,4 +12,5 @@ router.register(r'users', views.UserViewSet)
 router.register(r'players', views.PlayerViewSet)
 router.register(r'missions', views.MissionViewSet)
 router.register(r'objectives', views.ObjectiveViewSet)
+router.register(r'requests', views.RequestViewSet, basename='request')
 urlpatterns = urlpatterns + router.urls
