@@ -66,3 +66,14 @@ class ObjectivePlayer(models.Model):
 
     def __str__(self):
         return f'{self.objective.__str__()} - {self.player.__str__()} - Completed: {self.completed}'
+
+
+class Request(models.Model):
+    class Meta:
+        unique_together = (('request_from', 'request_to'),)
+
+    request_from = models.ForeignKey(Player, related_name='request_from', on_delete=models.CASCADE)
+    request_to = models.ForeignKey(Player, related_name='request_to', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.request_from.user.username} -> {self.request_to.user.username}'
