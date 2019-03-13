@@ -159,6 +159,27 @@ class PlayerViewSet(mixins.ListModelMixin,
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
+    @action(detail=True, methods=['GET'])
+    def remove_friend(self, request, pk=None):
+        """
+        Removed player specified by {id} from autuhenticated user's friend list\n
+        NOTE: Will currently return status 200 regardless of if specified player is a friend or not
+        """
+
+        try:
+            other_player = models.Player.objects.get(pk=pk)
+        except models.Player.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        player = request.user.player
+        queryset = player.friends
+
+        # TODO: Validate that player is a friend before removing, although it's fine to not
+
+        queryset.remove(other_player.id)
+
+        return Response(status=status.HTTP_200_OK)
+
 
 # /missions/
 class MissionViewSet(mixins.ListModelMixin,
