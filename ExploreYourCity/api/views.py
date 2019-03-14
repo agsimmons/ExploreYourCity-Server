@@ -160,6 +160,37 @@ class PlayerViewSet(mixins.ListModelMixin,
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     @action(detail=True, methods=['GET'])
+    def send_friend_request(self, request, pk=None):
+        """
+        Send friend request to player specified by {id}\n
+        If player is already friend, status 403\n
+        If request is already sent to player, status 200 and players are immediately made friends
+        """
+
+        try:
+            other_player = models.Player.objects.get(pk=pk)
+        except models.Player.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        player = request.user.player
+
+        # Return 403 if users are already friends
+        if player.friends.filter(id=other_player.id).count() == 1:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+        # If other_player has already sent a friend request to player, add as friends immediately
+        existing_friend_request_queryset = models.Request.objects.filter(request_from__id=other_player.id, request_to__id=player.id)
+        existing_friend_request = existing_friend_request_queryset.first()
+        if existing_friend_request:
+            existing_friend_request.delete()
+            player.friends.add(other_player.id)
+            return Response(status=status.HTTP_200_OK)
+
+        models.Request(request_from=player, request_to=other_player).save()
+
+        return Response(status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=['GET'])
     def remove_friend(self, request, pk=None):
         """
         Removed player specified by {id} from autuhenticated user's friend list\n
