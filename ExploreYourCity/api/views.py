@@ -159,6 +159,7 @@ class PlayerViewSet(mixins.ListModelMixin,
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
+    # TODO: Don't allow duplicate friend requests to be sent
     @action(detail=True, methods=['GET'])
     def send_friend_request(self, request, pk=None):
         """
@@ -392,8 +393,6 @@ class RequestViewSet(viewsets.ViewSet):
 
         # Delete request
         queryset.delete()
-
-        # TODO: Check if friend relation already exists when sending the request
 
         # Add friend relation
         from_player.friends.add(to_player)
