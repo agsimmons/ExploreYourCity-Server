@@ -8,8 +8,8 @@ class UserSerializer(serializers.ModelSerializer):
     username = serializers.CharField(
         # TODO: Add validators from settings and remove hardcoded validations
         validators=[UniqueValidator(queryset=User.objects.all())],
-        min_length=8,
-        max_length=24,
+        min_length=3,
+        max_length=18,
     )
     password = serializers.CharField(
         # TODO: Add validators from settings and remove hardcoded validations
