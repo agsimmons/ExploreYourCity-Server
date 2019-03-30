@@ -74,7 +74,7 @@ class MissionDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Mission
-        fields = ('id', 'category')
+        fields = ('id', 'value', 'category')
 
 
 class RequestSerializer(serializers.ModelSerializer):
