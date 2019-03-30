@@ -221,7 +221,7 @@ class MissionViewSet(mixins.ListModelMixin,
     queryset = models.Mission.objects.all()
     serializer_class = serializers.MissionDetailSerializer
 
-    @action(detail=False, methods=['GET'])
+    @action(detail=False, methods=['POST'])
     def available(self, request):
         """
         Returns a list of available missions sorted by distance to authenticated player\n
