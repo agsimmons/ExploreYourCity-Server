@@ -234,10 +234,12 @@ class MissionViewSet(mixins.ListModelMixin,
             player_coordinates = (coordinate_serializer.validated_data['latitude'],
                                   coordinate_serializer.validated_data['longitude'])
 
+            player = request.user.player
+
             # Get all missions which have not been started or completed by the player
             all_missions = set(models.Mission.objects.all())
-            completed_missions = set(functions.get_completed_missions(request.user.player))
-            new_missions = list(all_missions - completed_missions)
+            started_missions = set(functions.get_completed_missions(player) + functions.get_active_missions(player))
+            new_missions = list(all_missions - started_missions)
 
             # Calculate distances between player and mission
             mission_distances = []
