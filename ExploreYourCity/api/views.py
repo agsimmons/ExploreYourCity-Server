@@ -292,7 +292,7 @@ class MissionViewSet(mixins.ListModelMixin,
         # Return early if mission is already completed or active
         started_missions = functions.get_completed_missions(player) + functions.get_active_missions(player)
         if mission in started_missions:
-            return Response(status=status.HTTP_409_CONFLICT)
+            return Response(status=status.HTTP_200_OK)
 
         for objective in objectives:
             objective_player = models.ObjectivePlayer(objective=objective, player=player)
