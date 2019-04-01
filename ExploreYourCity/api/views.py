@@ -141,7 +141,7 @@ class PlayerViewSet(mixins.ListModelMixin,
     @action(detail=True, methods=['GET'])
     def completed_objectives(self, request, pk=None):
         """
-        Returns a list of specified player's completed objectives
+        Returns a list of specified player's completed objectives belonging to active missions
         """
 
         try:
@@ -151,9 +151,12 @@ class PlayerViewSet(mixins.ListModelMixin,
 
         objective_player_relations = models.ObjectivePlayer.objects.filter(player__id=player.id, completed=True)
 
+        completed_missions = functions.get_completed_missions(player)
+
         objectives = []
         for entry in objective_player_relations:
-            objectives.append(entry.objective)
+            if entry.objective.mission not in completed_missions:
+                objectives.append(entry.objective)
 
         serializer = serializers.ObjectiveDetailSerializer(objectives, many=True)
 
