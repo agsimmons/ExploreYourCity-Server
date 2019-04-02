@@ -84,3 +84,8 @@ class RequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Request
         fields = ('id', 'request_from', 'request_to')
+
+
+class SendRequestSerializer(serializers.Serializer):
+    username = serializers.CharField(min_length=3,
+                                     max_length=18)

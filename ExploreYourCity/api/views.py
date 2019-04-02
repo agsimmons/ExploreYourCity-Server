@@ -382,6 +382,31 @@ class RequestViewSet(viewsets.ViewSet):
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
+    @action(detail=False, methods=['POST'])
+    def send(self, request):
+        player = request.user.player
+
+        # Get "username" field from request
+        serializer = serializers.SendRequestSerializer(data=request.data)
+
+        if serializer.is_valid():
+            # Check if user with username specified in request exists
+            recipient = models.Player.objects.filter(user__username=serializer.validated_data['username'])
+            print(recipient)
+            print(len(recipient))
+            if len(recipient) == 1:
+                recipient_object = recipient.first()
+
+                # Create the request
+                new_request = models.Request(request_from=player,
+                                             request_to=recipient_object)
+
+                new_request.save()
+
+        # If user specified exists, create a request between the sender and recipient
+
+        return Response(status=status.HTTP_200_OK)
+
     @action(detail=True, methods=['GET'])
     def accept(self, request, pk=None):
         player = request.user.player
